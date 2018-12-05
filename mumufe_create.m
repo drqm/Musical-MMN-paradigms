@@ -1,9 +1,8 @@
-% ### This script generates a block of the Musical Multifeature MMN
-% Paradigm  ###
+% ### This script generates a block of the Musical Multifeature MMN Paradigm  ###
 % ### Created by David Quiroga 05/07/2018 ###
-% ### last edited 23/08/2018 by David Quiroga ###
+% ### last edited 05/12/2018 by David Quiroga ###
 
-function out = mumufe_create(cfg)
+function mumufe_create(cfg)
 
 %out = [];
 % input arguments and defaults
@@ -135,9 +134,6 @@ end
 
 n_melodies = length(all_melodies); % Total number of melodies
 n_transpositions = length(transpositions);
-
-% We have here 4 types of deviants: pitch, intensity, melody and slide
-% The deviants can be placed in any of the 4 positions of a 4-note cell.
 
 % Randomizing melodies. Order is pseudorandom, so that no melody repeats before the whole pool has sounded once more.
 random_mel = randperm(n_melodies);
