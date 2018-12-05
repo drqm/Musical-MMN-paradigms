@@ -1,5 +1,5 @@
-function out = mumufe_record(name,sequence,tone_dir)
-% out = [];
+function mumufe_record(name,sequence,tone_dir)
+
 s_rate = 44100;
 
 % load tone pool
