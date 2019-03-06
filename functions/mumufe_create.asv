@@ -16,13 +16,13 @@ end
 if isfield(cfg,'tone_dir') && ~isempty(cfg.tone_dir)
     tone_dir = cfg.tone_dir; %'C:/Users/au571303/Google Drive/Scripts_Atonal_MuMUFE/tone_pool/';
 else
-    tone_dir = '/tone_pool/';
+    tone_dir = '../tone_pool/';
 end
 
 if isfield(cfg,'mel_pool') && ~isempty(cfg.mel_pool)
     all_melodies = cfg.mel_pool;% melody pool
 else
-    all_melodies = {[1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8]};
+    error('you must provide a set of melodies to the parameter cfg.mel_pool')
 end
 if isfield(cfg,'sound_out') && ~isempty(cfg.sound_out)
     record_sound = cfg.sound_out; % record sound example
@@ -32,7 +32,7 @@ end
 if isfield(cfg,'transpositions') && ~isempty(cfg.transpositions)
     transpositions = cfg.transpositions; % defining the transpositions in terms of semitones
 else
-    transpositions = 0:5;
+    transpositions = 0;
 end
 
 if isfield(cfg,'n_runs') && ~isempty(cfg.n_runs)
@@ -50,7 +50,7 @@ end
 if isfield(cfg,'baseline_add') && ~isempty(cfg.baseline_add)
     baseline_add = cfg.baseline_add;
 else
-    baseline_add = 1; % add one melody without deviants at the beggining of the block
+    baseline_add = 0; % add one melody without deviants at the beggining of the block
 end
 
 if isfield(cfg,'add_deviant') && ~isempty(cfg.add_deviant)
@@ -74,13 +74,13 @@ end
 if isfield(cfg,'n_deviants') && ~isempty(cfg.n_deviants)
     n_deviants = cfg.n_deviants;
 else
-    n_deviants = 4; % Number of standard tones in the tone pool
+    n_deviants = 4; % Number of deviant features
 end
 
 if isfield(cfg,'cell_size') && ~isempty(cfg.cell_size)
     cell_size = cfg.cell_size;
 else
-    cell_size = 4; % Number of standard tones in the tone pool
+    cell_size = 4; % size of the cell where each deviant will be randomly placed
 end
 
 if isfield(cfg,'dev_method') && ~isempty(cfg.dev_method)
@@ -140,7 +140,7 @@ random_mel = randperm(n_melodies);
 if n_runs > 1
     for run = 2:n_runs
         mel_prob = 1;
-        while mel_prob == 1 % will only run as long as trans_prob = 1
+        while mel_prob == 1 % will only run as long as mel_prob = 1
             old_run = random_mel;
             new_run = randperm(n_melodies);
             if n_melodies > 1
@@ -180,7 +180,11 @@ if length(transpositions) ~= 1
     if (length(random_mel) - length(random_trans)) ~= 0
         probe_add = 0;
         while probe_add == 0
+            if length(random_trans) >= n_melodies*n_runs
+               add_trans = datasample(transpositions,n_melodies*n_runs, 'Replace',false);
+            else
             add_trans = transpositions(randperm(n_transpositions,n_melodies*n_runs - length(random_trans)));
+            end
             provisional_trans = [random_trans, add_trans];
             if ~ismember(0,diff(provisional_trans))
                 random_trans = provisional_trans;
@@ -198,7 +202,7 @@ melody = all_melodies{random_mel(1)} + random_trans(1);
 mel_track = repmat(random_mel(1),1,length(melody)); trans_track = repmat(random_trans(1),1,length(melody));
 pos_track = 1:length(melody);
 
-if n_melodies > 1
+if n_melodies*n_runs > 1
     for a = 2:n_melodies*n_runs
         new_mel = all_melodies{random_mel(a)} + random_trans(a);
         melody = [melody,new_mel];
@@ -297,8 +301,9 @@ disp('-------------------------------------------')
 disp('A block of the musical multifeature paradigm has been created')
 fprintf('The block consists of %d tones\n', length(melody))
 disp('Number of deviants per feature:')
+if add_deviant == 1
 disp(deviant_count(:,1:2))
-
+els
 %% selecting standards
 if select_standards == 1
     standards_vector = zeros(1,length(melody));
@@ -386,12 +391,15 @@ for chunk = 1:n_chunks
         fid3 = fopen([text_name(1:end-4) '_durations.txt'], 'wt');
         fprintf(fid3, '%d\n', dur_chunk);
         fclose(fid3);
-    end
-    
+    end   
     % out = mel_chunks;      
     % record sound:
     if record_sound == 1
+        if length(mel_chunk) > 500
+        sequence = mel_chunk(1:500,1);
+        else
         sequence = mel_chunk(1:(length(melody)/n_runs + addition),1); % select only one run of the paradigm, otherwise it gets extremely computationally demanding and takes too long
+        end
         fprintf('writing audio file %s.wav\n',name)
         mumufe_record([name,num2str(chunk)],sequence,tone_dir)
     end
