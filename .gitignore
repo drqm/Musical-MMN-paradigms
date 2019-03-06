@@ -1,2 +1,3 @@
 *.wav
-tone_pool
+tone_pooldebug.log 
+debug.log 
