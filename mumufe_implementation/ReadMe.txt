@@ -17,7 +17,7 @@ The codes for the preselection of standards (if applicable) shown in the '_stand
 Deviants are also included in this sequence: 241: pitch, 242: intensity, 243: timbre, 244: location, 245: slide, 246: rhythm.
 230 = no standard or deviant selected.
 
-These triggers are sent by a presentation script 50 ms after sound onset. They can be realigned when procesing the data.
+The standard triggers are sent by a presentation script 50 ms after sound onset. They can be realigned when processing the data.
 
 The paradigm consists of a repeating alberti sequence: 'C G E G C G E G C G E G C G E G C G E G C G E G ' transposed to 12 keys in a pseudorandom fashion, so that no key is repeated before the whole pool of 12 keys has been played. No key is repeated twice in a row. 
 
