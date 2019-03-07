@@ -1,0 +1,73 @@
+
+int n = 3480;		# n = 3480 gives a duration of approx. 15 mins
+
+array<int> sequenceListMelody[n];
+# reading sequence list from the text file
+input_file inMelody = new input_file;
+inMelody.open( "nostd_mumufe1.txt" );
+loop
+	int i = 0;
+until
+   inMelody.end_of_file() || i == n || !inMelody.last_succeeded()
+begin
+   i = i+1;
+   sequenceListMelody[i] = inMelody.get_int();
+end;
+inMelody.close();
+
+array<int> sequenceListStandard[n];
+# reading sequence list from the text file
+input_file inStandard = new input_file;
+inStandard.open( "nostd_mumufe1_standards.txt" );
+loop
+	int i = 0;
+until
+   inStandard.end_of_file() || i == n || !inStandard.last_succeeded()
+begin
+   i = i+1;
+   sequenceListStandard[i] = inStandard.get_int();
+end;
+inStandard.close();
+
+array<int> sequenceListDurations[n];
+# reading duration list from the text file
+input_file inDurations = new input_file;
+inDurations.open( "nostd_mumufe1_durations.txt" );
+loop
+	int i = 0;
+until
+   inDurations.end_of_file() || i == n || !inDurations.last_succeeded()
+begin
+   i = i+1;
+   sequenceListDurations[i] = inDurations.get_int();
+end;
+inDurations.close();
+
+# an experiment loop
+int time = 1;
+loop
+	int i = 1;
+	int next_onset = 1000;
+until
+	i > sequenceListMelody.count()
+begin
+	if (time == next_onset) then
+		
+		sound_event.set_stimulus( all_sounds[sequenceListMelody[i]] );
+		sound_event.set_event_code( all_sounds[sequenceListMelody[i]].description() );
+		sound_event.set_port_code( sequenceListMelody[i] );
+		sound_trial.set_start_time( next_onset );
+		sound_trial.present();
+		
+		##### standard_trial contains no sound, it is only here to ensure that the port code of the standards is also recorded.
+		standard_event.set_event_code( standard_codes[sequenceListStandard[i]].description() );
+		standard_event.set_port_code( sequenceListStandard[i] );
+		standard_trial.set_start_time ( next_onset + 50 );
+		standard_trial.present();
+			
+		i = i+1;
+		
+ 		next_onset = time + sequenceListDurations[i-1];
+	end;
+	time = time+1;
+end;

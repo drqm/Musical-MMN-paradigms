@@ -3,7 +3,7 @@ addpath('../functions');
 %% Musical Multifeature
 cfg = [];
 cfg.sound_out = 1; % produce sound example
-cfg.name = 'nostd_MuMuFe'; % name of the text and sound output files
+cfg.name = 'nostd_mumufe'; % name of the text and sound output files
 cfg.mel_pool = {[1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 ];
                 [1 8 4 8 1 8 4 8 1 8 4 8 1 8 4 8 1 8 4 8 1 8 4 8 ]};           
 cfg.tone_dir ='../tone_pool/'; % directory with the tones that the paradigm uses
@@ -14,7 +14,7 @@ cfg.baseline_add = 1; % Add a melody with no deviants at the beginning of each b
 cfg.add_deviant = 1; % Add deviants to the sequence. 1 = yes, 0 = no.
 cfg.select_standards = 1;
 cfg.paradigm_type = 'nostd'; % type of paradigm std = standard, nostd = no standard
-cfg.range = 19; %   How many standard tones there are in the tone pool
+cfg.range = 19; % How many standard tones there are in the tone pool
 cfg.n_deviants = 6; % The number of devaint features. 6 = pitch, int, tim, loc, slide, rhtyhm.
 cfg.cell_size = 4; % The sequence will be divided in cells. For each cell there will be exclusively one deviant.
                    % The position of the deviant in the cell is controlled by cfg.dev_method.
