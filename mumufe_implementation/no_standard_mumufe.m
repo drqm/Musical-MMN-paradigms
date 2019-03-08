@@ -1,5 +1,6 @@
 %% This script creates an instance of the no standard musical multifeature paradgim
 addpath('../functions');
+rng(19874) %set seed for reproducibility
 %% Musical Multifeature
 cfg = [];
 cfg.sound_out = 1; % produce sound example
