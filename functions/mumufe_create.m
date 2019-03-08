@@ -13,7 +13,7 @@ else
 end
 
 if isfield(cfg,'tone_dir') && ~isempty(cfg.tone_dir)
-    tone_dir = cfg.tone_dir; %'C:/Users/au571303/Google Drive/Scripts_Atonal_MuMUFE/tone_pool/';
+    tone_dir = cfg.tone_dir;
 else
     tone_dir = '../tone_pool/';
 end
@@ -30,13 +30,13 @@ else
 end
 
 if isfield(cfg,'sound_length') && ~isempty(cfg.sound_out)
-    sound_length = cfg.sound_length; % record sound example
+    sound_length = cfg.sound_length; % length of sound example
 else
     sound_length = 240;
 end
 
 if isfield(cfg,'transpositions') && ~isempty(cfg.transpositions)
-    transpositions = cfg.transpositions; % defining the transpositions in terms of semitones
+    transpositions = cfg.transpositions; % defining the transpositions in semitones
 else
     transpositions = 0;
 end
@@ -62,7 +62,7 @@ end
 if isfield(cfg,'add_deviant') && ~isempty(cfg.add_deviant)
     add_deviant = cfg.add_deviant;
 else
-    add_deviant = 1; 
+    add_deviant = 0; 
 end
 
 if isfield(cfg,'paradigm_type') && ~isempty(cfg.paradigm_type)
@@ -74,13 +74,13 @@ end
 if isfield(cfg,'range') && ~isempty(cfg.range)
     range = cfg.range;
 else
-    range = 31; % Number of standard tones in the tone pool
+    range = 19; % Number of standard tones in the tone pool
 end
 
 if isfield(cfg,'n_deviants') && ~isempty(cfg.n_deviants)
     n_deviants = cfg.n_deviants;
 else
-    n_deviants = 4; % Number of deviant features
+    n_deviants = 6; % Number of deviant features
 end
 
 if isfield(cfg,'cell_size') && ~isempty(cfg.cell_size)
@@ -92,18 +92,18 @@ end
 if isfield(cfg,'dev_method') && ~isempty(cfg.dev_method)
     dev_method = cfg.dev_method;
 else
-    dev_method = 'random'; % Number of standard tones in the tone pool
+    dev_method = 'random'; % alternative "fixed"
 end
 if isfield(cfg,'fixed_dev_place') && ~isempty(cfg.fixed_dev_place)
     fixed_dev_place = cfg.fixed_dev_place;
 else
-    fixed_dev_place = 3'; % Number of standard tones in the tone pool
+    fixed_dev_place = 3'; % place of the deviant in the cell
 end
 
 if isfield(cfg,'keep_meter') && ~isempty(cfg.keep_meter)
     keep_meter = cfg.keep_meter;
 else
-    keep_meter = 0; % Number of standard tones in the tone pool
+    keep_meter = 0;
 end
 
 if isfield(cfg,'rhythm_dev_code') && ~isempty(cfg.rhythm_dev_code)
