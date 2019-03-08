@@ -29,6 +29,13 @@ if isfield(cfg,'sound_out') && ~isempty(cfg.sound_out)
 else
     record_sound = 0;
 end
+
+if isfield(cfg,'sound_length') && ~isempty(cfg.sound_out)
+    sound_length = cfg.sound_length; % record sound example
+else
+    sound_length = 240;
+end
+
 if isfield(cfg,'transpositions') && ~isempty(cfg.transpositions)
     transpositions = cfg.transpositions; % defining the transpositions in terms of semitones
 else
@@ -400,10 +407,10 @@ for chunk = 1:n_chunks
     % out = mel_chunks;      
     % record sound:
     if record_sound == 1
-        if length(mel_chunk) > 500
-        sequence = mel_chunk(1:500,1);
+        if length(mel_chunk) >= sound_length
+            sequence = mel_chunk(1:sound_length,1); % select only one run of the paradigm, otherwise it gets extremely computationally demanding and takes too long
         else
-        sequence = mel_chunk(1:(length(melody)/n_runs + addition),1); % select only one run of the paradigm, otherwise it gets extremely computationally demanding and takes too long
+            sequence = mel_chunk;
         end
         fprintf('writing audio file %s.wav\n',name)
         mumufe_record([name,num2str(chunk)],sequence,tone_dir)

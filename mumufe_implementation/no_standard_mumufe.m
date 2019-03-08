@@ -3,6 +3,7 @@ addpath('../functions');
 %% Musical Multifeature
 cfg = [];
 cfg.sound_out = 1; % produce sound example
+cfg.sound_length = 240; % how many individual sounds to record - make it short to avoid large files
 cfg.name = 'nostd_mumufe'; % name of the text and sound output files
 cfg.mel_pool = {[1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 1 8 5 8 ];
                 [1 8 4 8 1 8 4 8 1 8 4 8 1 8 4 8 1 8 4 8 1 8 4 8 ]};           
