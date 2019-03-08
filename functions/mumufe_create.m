@@ -1,6 +1,5 @@
 % ### This script generates a block of the Musical Multifeature MMN Paradigm  ###
 % ### Created by David Quiroga 05/07/2018 ###
-% ### last edited 05/12/2018 by David Quiroga ###
 
 function mumufe_create(cfg)
 
